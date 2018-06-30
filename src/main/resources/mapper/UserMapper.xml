@@ -5,4 +5,12 @@
     <insert id="insertUser" parameterType="User">
         INSERT INTO t_user (username, password, money) VALUES (#{username}, #{password}, #{money})
     </insert>
+
+    <select id="getUserById" parameterType="long" resultType="User">
+        SELECT *  FROM t_user WHERE id=#{userId}
+    </select>
+
+    <select id="getUserByUsername" parameterType="string" resultType="User">
+        SELECT *  FROM t_user WHERE username=#{value}
+    </select>
 </mapper>

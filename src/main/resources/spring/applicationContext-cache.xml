@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/cache
+       http://www.springframework.org/schema/cache/spring-cache.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--启用基于注解的缓存驱动-->
+    <cache:annotation-driven/>
+    <!--配置Spring cache-->
+    <bean id="cacheManager"
+          class="org.springframework.cache.support.SimpleCacheManager">
+        <property name="caches">
+            <set>
+                <bean name="default"
+                      class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"/>
+                <bean name="users"
+                      class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"/>
+            </set>
+        </property>
+    </bean>
+
+    <!--声明式缓存配置,默认引用cacheManager的bean-->
+    <cache:advice id="cacheAdvice">
+        <cache:caching cache="users">
+            <cache:cacheable method="findUserById" key="#userId"/>
+            <cache:cache-evict method="reload*" all-entries="true"/>
+        </cache:caching>
+    </cache:advice>
+
+    <aop:config>
+        <aop:pointcut id="cachePointcut"
+                      expression="execution(* com.ilidan.service.UserService+.*(..))"/>
+        <aop:advisor advice-ref="cacheAdvice" pointcut-ref="cachePointcut"/>
+    </aop:config>
+</beans>

@@ -14,4 +14,8 @@ public interface UserMapper {
 
     void insertUser(User user);
 
+    User getUserById(@Param("userId") Long userId);
+
+    User getUserByUsername(String username);
+
 }

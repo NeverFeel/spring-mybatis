@@ -11,6 +11,12 @@ import com.ilidan.domain.User;
  */
 public interface UserService {
 
-    void insert(User user);
+    void insertUser(User user);
+
+    User getUserByUsername(String username);
+
+    User findUserById(Long userId);
+
+    void reloadUser();
 
 }

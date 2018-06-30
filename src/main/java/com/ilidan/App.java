@@ -37,17 +37,37 @@ public class App {
     }*/
 
     @Test
+    public void testFindUserById() {
+        userService.findUserById(7L);
+        System.out.println("==========UserService#findUserById(Long userId) second invoked!");
+        userService.findUserById(7L);
+        System.out.println("==========Clear the cache!");
+        userService.reloadUser();
+        userService.findUserById(7L);
+    }
+
+    @Test
+    public void testGetUserByUsername() {
+        userService.getUserByUsername("ilidan");
+        System.out.println("UserService#getUserByUsername(String username) second invoked!");
+        userService.getUserByUsername("ilidan");
+    }
+
+    @Test
     public void testInsertUserMethod() {
 
-        System.out.println("---------------->:"+userService);
+        System.out.println("isAopProxy:" + AopUtils.isAopProxy(userService));
+        System.out.println("isCglibProxy:" + AopUtils.isCglibProxy(userService));
+        System.out.println("isJdkDynamicProxy:" + AopUtils.isJdkDynamicProxy(userService));
+
+        System.out.println("---------------->:" + userService);
         User user = new User();
         user.setUsername("ilidan");
         user.setPassword("123456");
         user.setMoney(342.1);
 
-        userService.insert(user);
+        userService.insertUser(user);
         //userMapper.insertUser(user);
-
     }
 
 }
