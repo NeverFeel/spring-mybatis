@@ -13,4 +13,8 @@
     <select id="getUserByUsername" parameterType="string" resultType="User">
         SELECT *  FROM t_user WHERE username=#{value}
     </select>
+
+    <select id="findUserList" resultType="User">
+        SELECT *  FROM t_user
+    </select>
 </mapper>

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author ilidan_Y
  * @Package com.ilidan.service
@@ -33,6 +35,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 根据userId查找User信息
+     *
      * @param userId 用户id
      * @return User
      */
@@ -48,6 +51,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void reloadUser() {
         System.out.println("User cache reload success");
+    }
+
+    @Override
+    public List<User> findUserList() {
+        return userMapper.findUserList();
     }
 
 }

@@ -2,6 +2,8 @@ package com.ilidan.service;
 
 import com.ilidan.domain.User;
 
+import java.util.List;
+
 /**
  * @author ilidan_Y
  * @Package com.ilidan.service
@@ -18,5 +20,7 @@ public interface UserService {
     User findUserById(Long userId);
 
     void reloadUser();
+
+    List<User> findUserList();
 
 }

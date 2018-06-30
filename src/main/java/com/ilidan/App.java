@@ -1,5 +1,6 @@
 package com.ilidan;
 
+import com.ilidan.cache.UserCache;
 import com.ilidan.domain.User;
 import com.ilidan.mapper.UserMapper;
 import com.ilidan.service.UserService;
@@ -27,6 +28,9 @@ public class App {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserCache userCache;
+
     public static void main(String[] args) {
         System.out.println("Hello World!");
     }
@@ -35,6 +39,15 @@ public class App {
     public void beforeTest() {
         context = new ClassPathXmlApplicationContext("classpath:spring/applicationContext.xml");
     }*/
+
+    @Test
+    public void testUserCache() {
+        System.out.println("第一次获取缓存中的用户数据：" + userCache.getUserCacheById(7L));
+        System.out.println("清除当前用户id的缓存！");
+        userCache.removeUserCacheById(7L);
+        System.out.println("第二次获取缓存中的用户数据：" + userCache.getUserCacheById(7L));
+        System.out.println("第三次获取缓存中的用户数据：" + userCache.getUserCacheById(7L));
+    }
 
     @Test
     public void testFindUserById() {
